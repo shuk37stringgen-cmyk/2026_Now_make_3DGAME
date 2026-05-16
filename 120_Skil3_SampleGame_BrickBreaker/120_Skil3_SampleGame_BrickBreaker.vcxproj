@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{5D8AE105-9AB2-42A9-A5CE-3E48DC96923F}</ProjectGuid>
+    <RootNamespace>My000GameDevelopment</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>..\common;..\common\dxe;..\common\DirectXTex\Inc\DirectXTex;..\common\DirectXTK\Inc;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(IncludePath)</IncludePath>
+    <LibraryPath>..\common\DirectXTex\lib_debug;..\common\DirectXTK\lib_debug;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>..\common\dxe;..\common\DirectXTex\Inc\DirectXTex;..\common\DirectXTK\Inc;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(IncludePath)</IncludePath>
+    <LibraryPath>..\common\DirectXTK\lib_release;..\common\DirectXTex\lib_release;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>DirectXTex.lib;DirectXTK.lib;D3DCompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\common\dxe\dxe.h" />
+    <ClInclude Include="..\common\dxe\dxe_build_setting.h" />
+    <ClInclude Include="..\common\dxe\dxe_camera.h" />
+    <ClInclude Include="..\common\dxe\dxe_data.h" />
+    <ClInclude Include="..\common\dxe\dxe_font_text.h" />
+    <ClInclude Include="..\common\dxe\dxe_graphics_layer.h" />
+    <ClInclude Include="..\common\dxe\dxe_input.h" />
+    <ClInclude Include="..\common\dxe\dxe_prototype.h" />
+    <ClInclude Include="..\common\dxe\dxe_render_param.h" />
+    <ClInclude Include="..\common\dxe\dxe_sprite.h" />
+    <ClInclude Include="..\common\dxe\dxe_texture.h" />
+    <ClInclude Include="..\common\dxe\effects\dxe_erea_projection.h" />
+    <ClInclude Include="..\common\dxe\effects\dxe_particle.h" />
+    <ClInclude Include="..\common\dxe\effects\dxe_shadow_map.h" />
+    <ClInclude Include="..\common\dxe\effects\dxe_water_plane.h" />
+    <ClInclude Include="..\common\dxe\gui\dxe_gui_check_box.h" />
+    <ClInclude Include="..\common\dxe\gui\dxe_gui_drag_box.h" />
+    <ClInclude Include="..\common\dxe\gui\dxe_gui_input_box.h" />
+    <ClInclude Include="..\common\dxe\gui\dxe_gui_menu_selector.h" />
+    <ClInclude Include="..\common\dxe\gui\dxe_gui_value_slider.h" />
+    <ClInclude Include="..\common\dxe\mesh\dxe_inst_mesh.h" />
+    <ClInclude Include="..\common\dxe\mesh\dxe_mesh.h" />
+    <ClInclude Include="..\common\dxe\mesh\dxe_mesh_base.h" />
+    <ClInclude Include="..\common\dxe\mesh\dxe_mesh_desc.h" />
+    <ClInclude Include="..\common\dxe\mesh\dxe_mesh_mtrl_gui_controller.h" />
+    <ClInclude Include="..\common\dxe\OBJLoader.h" />
+    <ClInclude Include="..\common\example\util\dxe_input_joypad.h" />
+    <ClInclude Include="..\common\example\util\dxe_input_unique_device.h" />
+    <ClInclude Include="..\common\tnl\json11.hpp" />
+    <ClInclude Include="..\common\tnl\stb_image.h" />
+    <ClInclude Include="..\common\tnl\tnl_build_setting.h" />
+    <ClInclude Include="..\common\tnl\tnl_coroutine.h" />
+    <ClInclude Include="..\common\tnl\tnl_csv.h" />
+    <ClInclude Include="..\common\tnl\tnl_folder_tree.h" />
+    <ClInclude Include="..\common\tnl\tnl_font_texture.h" />
+    <ClInclude Include="..\common\tnl\tnl_hierarchy_tree.h" />
+    <ClInclude Include="..\common\tnl\tnl_input.h" />
+    <ClInclude Include="..\common\tnl\tnl_instance.h" />
+    <ClInclude Include="..\common\tnl\tnl_interactor.h" />
+    <ClInclude Include="..\common\tnl\tnl_intersect.h" />
+    <ClInclude Include="..\common\tnl\tnl_link_linear.h" />
+    <ClInclude Include="..\common\tnl\tnl_math.h" />
+    <ClInclude Include="..\common\tnl\tnl_matrix.h" />
+    <ClInclude Include="..\common\tnl\tnl_quaternion.h" />
+    <ClInclude Include="..\common\tnl\tnl_rect.h" />
+    <ClInclude Include="..\common\tnl\tnl_seek_unit.h" />
+    <ClInclude Include="..\common\tnl\tnl_shared_factory.h" />
+    <ClInclude Include="..\common\tnl\tnl_state_machine.h" />
+    <ClInclude Include="..\common\tnl\tnl_task_scheduler.h" />
+    <ClInclude Include="..\common\tnl\tnl_using.h" />
+    <ClInclude Include="..\common\tnl\tnl_util.h" />
+    <ClInclude Include="..\common\tnl\tnl_vector.h" />
+    <ClInclude Include="..\common\tnl\tnl_vector2f.h" />
+    <ClInclude Include="..\common\tnl\tnl_vector2i.h" />
+    <ClInclude Include="..\common\tnl\tnl_vector3.h" />
+    <ClInclude Include="120_Skil3_SampleGame_BrickBreaker.h" />
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="program\engine\public\engine.h" />
+    <ClInclude Include="program\engine\public\object\010_object.h" />
+    <ClInclude Include="program\engine\public\object\020_obj_mover.h" />
+    <ClInclude Include="program\engine\public\object\030_obj_drawable.h" />
+    <ClInclude Include="program\engine\public\object\100_obj_text.h" />
+    <ClInclude Include="program\engine\public\object\110_obj_scenery.h" />
+    <ClInclude Include="program\engine\public\scene.h" />
+    <ClInclude Include="program\gm_main.h" />
+    <ClInclude Include="program\scene\in_game\ball.h" />
+    <ClInclude Include="program\scene\in_game\bar.h" />
+    <ClInclude Include="program\scene\in_game\block.h" />
+    <ClInclude Include="program\scene\in_game\scene_in_game.h" />
+    <ClInclude Include="program\scene\result\scene_result.h" />
+    <ClInclude Include="program\scene\title\scene_title.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\common\dxe\dxe.cpp" />
+    <ClCompile Include="..\common\dxe\dxe_camera.cpp" />
+    <ClCompile Include="..\common\dxe\dxe_data.cpp" />
+    <ClCompile Include="..\common\dxe\dxe_font_text.cpp" />
+    <ClCompile Include="..\common\dxe\dxe_graphics_layer.cpp" />
+    <ClCompile Include="..\common\dxe\dxe_input.cpp" />
+    <ClCompile Include="..\common\dxe\dxe_sprite.cpp" />
+    <ClCompile Include="..\common\dxe\dxe_texture.cpp" />
+    <ClCompile Include="..\common\dxe\effects\dxe_erea_projection.cpp" />
+    <ClCompile Include="..\common\dxe\effects\dxe_particle.cpp" />
+    <ClCompile Include="..\common\dxe\effects\dxe_particle_sub.cpp" />
+    <ClCompile Include="..\common\dxe\effects\dxe_shadow_map.cpp" />
+    <ClCompile Include="..\common\dxe\effects\dxe_water_plane.cpp" />
+    <ClCompile Include="..\common\dxe\effects\dxe_water_plane_sub.cpp" />
+    <ClCompile Include="..\common\dxe\gui\dxe_gui_check_box.cpp" />
+    <ClCompile Include="..\common\dxe\gui\dxe_gui_drag_box.cpp" />
+    <ClCompile Include="..\common\dxe\gui\dxe_gui_input_box.cpp" />
+    <ClCompile Include="..\common\dxe\gui\dxe_gui_menu_selector.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_barrel.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_box.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_cone.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_cone_cylinder.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_cube.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_cylinder.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_disk.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_disk_ring.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_dome.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_from_height_map.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_half_barrel.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_hollow_out_disk_plane.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_obj.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_plane.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_sphere.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_static_group.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_torus.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_triangle_equilateral.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_triangle_isosceles.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\create_mesh\dxe_mesh_triangle_right.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\dxe_inst_mesh.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\dxe_mesh.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\dxe_mesh_base.cpp" />
+    <ClCompile Include="..\common\dxe\mesh\dxe_mesh_mtrl_gui_controller.cpp" />
+    <ClCompile Include="..\common\dxe\OBJLoader.cpp" />
+    <ClCompile Include="..\common\tnl\json11.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_font_texture.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_inclution_owner_locked.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_input.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_instance.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_intersect.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_math.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_matrix.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_quaternion.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_rect.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_seek_unit.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_state_machine.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_task_scheduler.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_util.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_vector2f.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_vector2i.cpp" />
+    <ClCompile Include="..\common\tnl\tnl_vector3.cpp" />
+    <ClCompile Include="120_Skil3_SampleGame_BrickBreaker.cpp" />
+    <ClCompile Include="program\engine\public\engine.cpp" />
+    <ClCompile Include="program\engine\public\object\010_object.cpp" />
+    <ClCompile Include="program\engine\public\object\020_obj_mover.cpp" />
+    <ClCompile Include="program\engine\public\object\030_obj_drawable.cpp" />
+    <ClCompile Include="program\engine\public\object\100_obj_text.cpp" />
+    <ClCompile Include="program\engine\public\object\110_obj_scenery.cpp" />
+    <ClCompile Include="program\engine\public\scene.cpp" />
+    <ClCompile Include="program\gm_main.cpp" />
+    <ClCompile Include="program\scene\in_game\ball.cpp" />
+    <ClCompile Include="program\scene\in_game\bar.cpp" />
+    <ClCompile Include="program\scene\in_game\block.cpp" />
+    <ClCompile Include="program\scene\in_game\scene_in_game.cpp" />
+    <ClCompile Include="program\scene\result\scene_result.cpp" />
+    <ClCompile Include="program\scene\title\scene_title.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="120_Skil3_SampleGame_BrickBreaker.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="120_Skil3_SampleGame_BrickBreaker.ico" />
+    <Image Include="small.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

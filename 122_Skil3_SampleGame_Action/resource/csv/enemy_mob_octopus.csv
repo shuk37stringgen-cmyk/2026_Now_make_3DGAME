@@ -1,0 +1,9 @@
+type,0,
+bounding_box_size,67,60
+anim_file_name,enemy.png,
+all_frame_num,5,
+x_num,5,
+y_num,1,
+size,67,60
+time,0.75,
+play_mode,1,
