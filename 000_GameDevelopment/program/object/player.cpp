@@ -34,7 +34,7 @@ void Player::init() {
     m_accel_power = 0.8f;
 	m_friction = 0.98f;
 
-
+	// UŒ‚—Í‚Æ–hŒä—Í‚Ì‰Šú‰»
 
 
 
