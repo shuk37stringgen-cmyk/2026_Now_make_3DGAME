@@ -7,7 +7,7 @@ void Enemy::init() {
 	//エネミーの基本情報
 	m_hp = 10.0f;
 	m_max_hp = 10.0f;
-	m_speed = 0.5f;
+	m_speed = 2.0f;
 
 	m_velocity = { 0, 0, 0 };
 	m_rotation = { 0, 0, 0, 1 };

@@ -56,13 +56,11 @@ void GameManager::update(float delta_time) {
         // 50%の確率で星か自分か選ぶ
         if ((rand() % 10) > 5) {
            
-            float random_speed = 12.0f + (static_cast<float>(rand()) / RAND_MAX) * 6.0f;
-            new_enemy->switchTarget(EnemyState::TARGET_PLAYER, random_speed);
+            new_enemy->switchTarget(EnemyState::TARGET_PLAYER, new_enemy->m_speed);
         }
         else {
-           
-            float random_speed = 8.0f + (static_cast<float>(rand()) / RAND_MAX) * 4.0f;
-            new_enemy->switchTarget(EnemyState::TARGET_PLANET, random_speed);
+            
+            new_enemy->switchTarget(EnemyState::TARGET_PLANET, new_enemy->m_speed);
         }
 
         m_enemies.push_back(new_enemy);
