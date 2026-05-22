@@ -6,10 +6,10 @@ void Bullet::init() {
 	/*m_mesh = dxe::Mesh::CreateSphereMV(30.0f, 8, 8);
 	m_mesh->setTexture(dxe::Texture::CreateFromFile("resource/graphics/example/laser.mv1"));*/
 
-	m_mesh = dxe::Mesh::CreateFromFileMV("resource/graphics/example/laser2.mv1", 10.0f);
+	m_mesh = dxe::Mesh::CreateFromFileMV("resource/graphics/example/laser2.mv1", 1.0f);
 
 	//2.　弾の基本用パラメータの設定
-	m_max_speed = 100.0f;
+	m_max_speed = 300.0f;
 	m_life_timer = 2.0f;    // 2秒で消える
 	m_friction = 0.98f;
 }

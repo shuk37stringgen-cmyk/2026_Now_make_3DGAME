@@ -272,6 +272,7 @@
     <ClInclude Include="program\gm_main.h" />
     <ClInclude Include="program\object\bullet .h" />
     <ClInclude Include="program\object\CharacterBase.h" />
+    <ClInclude Include="program\object\enemy.h" />
     <ClInclude Include="program\object\planet.h" />
     <ClInclude Include="program\object\player.h" />
     <ClInclude Include="Resource.h" />
@@ -349,6 +350,7 @@
     <ClCompile Include="program\GameManager.cpp" />
     <ClCompile Include="program\gm_main.cpp" />
     <ClCompile Include="program\object\bullet .cpp" />
+    <ClCompile Include="program\object\enemy.cpp" />
     <ClCompile Include="program\object\planet.cpp" />
     <ClCompile Include="program\object\player.cpp" />
   </ItemGroup>

@@ -470,6 +470,9 @@
     <ClInclude Include="program\object\CharacterBase.h">
       <Filter>Source\[004] game\object</Filter>
     </ClInclude>
+    <ClInclude Include="program\object\enemy.h">
+      <Filter>Source\[004] game\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="000_GameDevelopment.cpp">
@@ -689,6 +692,9 @@
       <Filter>Source\[004] game\object</Filter>
     </ClCompile>
     <ClCompile Include="program\object\bullet .cpp">
+      <Filter>Source\[004] game\object</Filter>
+    </ClCompile>
+    <ClCompile Include="program\object\enemy.cpp">
       <Filter>Source\[004] game\object</Filter>
     </ClCompile>
   </ItemGroup>

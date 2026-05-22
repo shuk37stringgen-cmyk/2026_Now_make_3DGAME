@@ -1,115 +1,126 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 
 void Player::init() {
+    m_mesh = dxe::Mesh::CreateFromFileMV("resource/graphics/example/PlayerBard.mv1", 0.5f);
 
-	//// ƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
-   /* m_mesh = dxe::Mesh::CreateSphereMV(15.0f, 16, 16);
-    m_mesh->setTexture(dxe::Texture::CreateFromFile("resource/graphics/example/PlayerObj.fbx"));*/
-
-    // 1. ƒ[ƒhi”{—¦‚ð 1.0f ‚ÉBBlender‚Å‘Sƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚µ‚½‚È‚ç‚±‚ê‚ª³‰ðj
-    m_mesh = dxe::Mesh::CreateFromFileMV("resource/graphics/example/PlayerObject.mv1", 0.5f);
-
-   
-
-
-    //‰Šú’l‚ÌÝ’è
     m_position = { 0, 500, -4500 };
     m_velocity = { 0, 0, 0 };
     m_rotation = { 0, 0, 0, 1 };
 
-	// ó‘Ô‚Ì‰Šú‰»
     energy = 0;
-
-	// ‘€ì—p•Ï”‚Ì‰Šú‰»
     m_senkai = 0;
     m_unazuki = 0;
     m_katamuki = 0;
 
-	// ƒvƒŒƒCƒ„[‚ÌHP‚Ì‰Šú‰»
-	m_hp = 100.0f;
-	m_max_hp = 100.0f;
+    m_hp = 100.0f;
+    m_max_hp = 100.0f;
 
-	// ƒ‚[ƒh‚É‚æ‚Á‚Ä‰ÁŽZ‚³‚ê‚é•Ï”‚Ì‰Šú‰»
     m_max_speed = 30.0f;
     m_accel_power = 0.8f;
-	m_friction = 0.98f;
+    m_friction = 0.98f;
 
-	
-
-
-
+    m_swingby_angle = 0;
+    m_hosi_kyori = 0;
+    m_target_planet = nullptr;
+    m_swingby_cooltime = 0;
 }
 
 void Player::update(float delta_time, float time_scale) {
-    // 1. ‘Oi
-    tnl::Vector3 forward = tnl::Vector3::TransformCoord({ 0, 0, 1 }, m_rotation);
-    if (tnl::Input::IsKeyDown(eKeys::KB_SPACE)) {
-        m_velocity += forward * m_accel_power * time_scale;
+    // ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ ã®æ›´æ–°
+    if (m_swingby_cooltime > 0.0f) {
+        m_swingby_cooltime -= delta_time;
     }
 
-    // 2. ù‰ñ
-    float turn_speed = 0.03f * time_scale;
-    float roll_limit = 0.6f;
-    if (tnl::Input::IsKeyDown(eKeys::KB_A)) {
-        m_senkai -= turn_speed;
-        m_katamuki = MyLerp(m_katamuki, -roll_limit, 0.1f);
-    }
-    else if (tnl::Input::IsKeyDown(eKeys::KB_D)) {
-        m_senkai += turn_speed;
-        m_katamuki = MyLerp(m_katamuki, roll_limit, 0.1f);
+    //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®çŠ¶æ…‹åˆ†ã‘ã‚’ã™ã‚‹
+    if (state == PlayerState::SWINGBY && m_target_planet) {
+
+        // 1. è§’åº¦ã‚’é€²ã‚ã‚‹
+        m_swingby_angle += 0.02f * time_scale;
+
+        // 2. è¡¨é¢æ»‘èµ°ã®è·é›¢
+        float h = m_target_planet->radius + 150.0f;
+
+        // 3. ãƒ¡ãƒªãƒ¼ã‚´ãƒ¼ãƒ©ãƒ³ãƒ‰ã®ã‚ˆã†ãªå›žè»¢ã‚’ã™ã‚‹è¨ˆç®—
+        m_position.x = m_target_planet->pos.x + cos(m_swingby_angle) * h;
+        m_position.z = m_target_planet->pos.z + sin(m_swingby_angle) * h;
+        m_position.y = m_target_planet->pos.y;
+
+        // 4. æ©Ÿä½“ã®å‘ãã‚’å††ã®æŽ¥ç·šæ–¹å‘ï¼ˆé€²ã‚€æ–¹å‘ï¼‰ã«ã´ã£ãŸã‚Šæ²¿ã‚ã›ã‚‹
+        m_senkai = -m_swingby_angle + (3.141592f / 2.0f);
+        m_unazuki = 0.0f;  // ä¸Šä¸‹ãƒ–ãƒ¬ã‚’ãƒªã‚»ãƒƒãƒˆ
+        m_katamuki = 0.0f; // å·¦å³ã®å‚¾ãã‚’ãƒªã‚»ãƒƒãƒˆ
+
+        m_rotation = tnl::Quaternion::RotationAxis({ 0, 1, 0 }, m_senkai);
+
+        // ãƒ¡ãƒƒã‚·ãƒ¥ã«å³åº§ã«ä½ç½®ã¨å›žè»¢ã‚’é©ç”¨ã—ã¦å›ºå®š
+        m_mesh->setRotation(m_rotation);
+        m_mesh->setPosition(m_position);
+
+        // ã‚¨ãƒãƒ«ã‚®ãƒ¼ã‚’æºœã‚ã‚‹
+        energy += 0.5f * time_scale;
+        if (energy > 100.0f) energy = 100.0f;
     }
     else {
-        m_katamuki = MyLerp(m_katamuki, 0.0f, 0.1f);
+        // ----ã€é€šå¸¸ãƒ•ãƒ©ã‚¤ãƒˆç§»å‹•ã®å‡¦ç†ã€‘-----
+
+        // 1. å‰é€²
+        tnl::Vector3 forward = tnl::Vector3::TransformCoord({ 0, 0, 1 }, m_rotation);
+        if (tnl::Input::IsKeyDown(eKeys::KB_SPACE)) {
+            m_velocity += forward * m_accel_power * time_scale;
+        }
+
+        // 2. æ—‹å›ž
+        float turn_speed = 0.03f * time_scale;
+        float roll_limit = 0.6f;
+        if (tnl::Input::IsKeyDown(eKeys::KB_A)) {
+            m_senkai -= turn_speed;
+            m_katamuki = MyLerp(m_katamuki, -roll_limit, 0.1f);
+        }
+        else if (tnl::Input::IsKeyDown(eKeys::KB_D)) {
+            m_senkai += turn_speed;
+            m_katamuki = MyLerp(m_katamuki, roll_limit, 0.1f);
+        }
+        else {
+            m_katamuki = MyLerp(m_katamuki, 0.0f, 0.1f);
+        }
+
+        // 4. ä¸Šä¸‹
+        if (tnl::Input::IsKeyDown(eKeys::KB_W)) m_unazuki += 0.02f * time_scale;
+        else if (tnl::Input::IsKeyDown(eKeys::KB_S)) m_unazuki -= 0.02f * time_scale;
+
+        // 5. å›žè»¢ã®é©ç”¨
+        tnl::Quaternion qYaw = tnl::Quaternion::RotationAxis({ 0, 1, 0 }, m_senkai);
+        tnl::Quaternion qPitch = tnl::Quaternion::RotationAxis({ 1, 0, 0 }, -m_unazuki);
+        tnl::Quaternion qRoll = tnl::Quaternion::RotationAxis({ 0, 0, 1 }, -m_katamuki);
+        m_rotation = qYaw * qPitch * qRoll;
+        m_mesh->setRotation(m_rotation);
+
+        // 6. é€²è¡Œæ–¹å‘ã®èª¿æ•´
+        if (m_velocity.length() > 0.1f) {
+            float current_speed = m_velocity.length();
+            m_velocity = MyLerp(m_velocity, forward * current_speed, 0.05f * time_scale);
+        }
+
+        // 7. ç§»å‹•ã®é©ç”¨
+        m_position += m_velocity * time_scale;
+        m_velocity *= m_friction;
+        m_mesh->setPosition(m_position);
     }
-
-	// 3. ’e‚ÌŽËo
-    if(tnl::Input::IsKeyDownTrigger(eKeys::KB_LEFT) ){
-        
-	}
-
-
-    // 4. ã‰º
-    if (tnl::Input::IsKeyDown(eKeys::KB_W)) m_unazuki += 0.02f * time_scale;
-    else if (tnl::Input::IsKeyDown(eKeys::KB_S)) m_unazuki -= 0.02f * time_scale;
-
-    // 5. ‰ñ“]
-    tnl::Quaternion qYaw = tnl::Quaternion::RotationAxis({ 0, 1, 0 }, m_senkai);
-    tnl::Quaternion qPitch = tnl::Quaternion::RotationAxis({ 1, 0, 0 }, -m_unazuki);
-    tnl::Quaternion qRoll = tnl::Quaternion::RotationAxis({ 0, 0, 1 }, -m_katamuki);
-    m_rotation = qYaw * qPitch * qRoll;
-    m_mesh->setRotation(m_rotation);
-
-    // 6. is•ûŒü‚Ì’²®
-    if (m_velocity.length() > 0.1f) {
-        float current_speed = m_velocity.length();
-        // ‚±‚±‚ð Vector3”Å‚Ì MyLerp ‚É‘‚«Š·‚¦I
-        m_velocity = MyLerp(m_velocity, forward * current_speed, 0.05f * time_scale);
-    }
-
-    // 7. ˆÚ“®‚Ì“K—p
-    m_position += m_velocity * time_scale;
-    m_velocity *= m_friction;
-    m_mesh->setPosition(m_position);
 }
 
 void Player::applySwingBy(tnl::Vector3 planet_pos) {
-    tnl::Vector3 to_planet = planet_pos - m_position;
-    tnl::Vector3 dir = tnl::Vector3::Normalize(to_planet);
-    m_velocity += dir * 0.8f;
-    energy += 0.5f;
-    if (energy > 100.0f) energy = 100.0f;
+  
 }
 
 void Player::releaseSwingBy() {
+    
     tnl::Vector3 forward = tnl::Vector3::TransformCoord({ 0, 0, 1 }, m_rotation);
-    m_velocity += forward * (energy * 0.2f);
+    m_velocity = forward * (m_max_speed + (energy * 0.3f));
     energy = 0;
 }
 
 void Player::render(Shared<dxe::Camera> cam) {
     if (m_mesh) {
         m_mesh->render(cam);
-
     }
-
 }

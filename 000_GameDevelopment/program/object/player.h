@@ -1,5 +1,7 @@
 #pragma once
+#include <memory>
 #include "CharacterBase.h" //基底クラスから継承
+#include "planet.h" //スイングバイのために星のクラスを参照
 
 //---------自機はフライトモード、スイングバイモード、ブーストモードの3つの状態を持つ---------
 /*
@@ -38,7 +40,15 @@ public:
     float m_unazuki;         //うなずきは上下の角度
 	float m_katamuki;      // 傾きは機体の動きに合わせて自動で変化させる（左右の傾き）
 
+	//スイングバイ関係の変数等
+    float m_swingby_angle;
+	float m_hosi_kyori; // 星との距離
+    std::shared_ptr<Planet> m_target_planet;
+	float m_swingby_cooltime; 
 
+
+
+    
 
 	//-----必要関数-----
     void init() override;

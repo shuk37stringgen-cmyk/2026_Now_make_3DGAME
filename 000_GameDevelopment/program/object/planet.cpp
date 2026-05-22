@@ -1,15 +1,19 @@
 #include "planet.h"
 
 Planet::Planet(tnl::Vector3 p, float r) : pos(p), radius(r) {
-    // 星の半径の2.5倍をスイングバイ圏内に設定[cite: 1]
+  
+    //スイングバイ領域を作る
     gravity_range = r * GRAVITY_RANGE_FACTOR;
 
-    // 球体のメッシュを作成
-    mesh = dxe::Mesh::CreateSphereMV(radius, 64, 64);
+   
+   // 1. メッシュを読み込む
+    mesh = dxe::Mesh::CreateFromFileMV("resource/graphics/example/planet.mv1", 10.0f);
 
-    // テクスチャ（見た目）の設定。ファイルパスは兄貴の環境に合わせてくれ
-    mesh->setTexture(dxe::Texture::CreateFromFile("resource/graphics/example/test.jpg"));
+   
     mesh->setPosition(pos);
+
+    mesh->setMtrlAmibent(tnl::Vector3(1.0f, 1.0f, 1.0f));
+    
 }
 
 void Planet::render(Shared<dxe::Camera> cam) {
