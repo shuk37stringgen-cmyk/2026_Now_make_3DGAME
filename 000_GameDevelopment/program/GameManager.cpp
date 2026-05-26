@@ -42,30 +42,35 @@ void GameManager::update(float delta_time) {
     if (m_enemy_spawn_timer >= 0.3f) {
         m_enemy_spawn_timer = 0.0f;
 
-        auto new_enemy = std::make_shared<Enemy>();
-        new_enemy->init();
+        if (m_enemies.size() < 100) {
+            auto new_enemy = std::make_shared<Enemy>();
+            new_enemy->init();
+            m_enemies.push_back(new_enemy);
 
-        // プレイヤーの周囲のランダムな位置
-        float spawn_radius = 4000.0f;
-        
-        //角度をrandomにしてる
-        float angle = (static_cast<float>(rand()) / RAND_MAX) * 2.0f * 3.14159f;
 
-        new_enemy->m_position = player.m_position + tnl::Vector3(cos(angle), 0, sin(angle)) * spawn_radius;
 
-        // 50%の確率で星か自分か選ぶ
-        if ((rand() % 10) > 5) {
-           
-            new_enemy->switchTarget(EnemyState::TARGET_PLAYER, new_enemy->m_speed);
+
+            // プレイヤーの周囲のランダムな位置
+            float spawn_radius = 4000.0f;
+
+            //角度をrandomにしてる
+            float angle = (static_cast<float>(rand()) / RAND_MAX) * 2.0f * 3.14159f;
+
+            new_enemy->m_position = player.m_position + tnl::Vector3(cos(angle), 0, sin(angle)) * spawn_radius;
+
+            // 50%の確率で星か自分か選ぶ
+            if ((rand() % 10) > 5) {
+
+                new_enemy->switchTarget(EnemyState::TARGET_PLAYER, new_enemy->m_speed);
+            }
+            else {
+
+                new_enemy->switchTarget(EnemyState::TARGET_PLANET, new_enemy->m_speed);
+            }
+
+            m_enemies.push_back(new_enemy);
         }
-        else {
-            
-            new_enemy->switchTarget(EnemyState::TARGET_PLANET, new_enemy->m_speed);
-        }
-
-        m_enemies.push_back(new_enemy);
     }
-
     // 星の座標
     tnl::Vector3 planet_pos = m_planets.empty() ? tnl::Vector3(0, 0, 0) : m_planets[0]->pos;
 
