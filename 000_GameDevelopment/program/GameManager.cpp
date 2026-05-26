@@ -45,7 +45,7 @@ void GameManager::update(float delta_time) {
         if (m_enemies.size() < 100) {
             auto new_enemy = std::make_shared<Enemy>();
             new_enemy->init();
-            m_enemies.push_back(new_enemy);
+            
 
 
 
