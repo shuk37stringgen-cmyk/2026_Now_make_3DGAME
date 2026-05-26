@@ -10,6 +10,7 @@ class Enemy : public CharacterBase{
 public:
 	EnemyState m_state = EnemyState::TARGET_PLAYER;
 	float m_speed;
+	float m_attack_power;
 
 
 	//基底クラスのオーバーライド

@@ -88,7 +88,7 @@ void GameManager::update(float delta_time) {
         // エネミー自身の位置・メッシュ更新処理を呼び出す
         enemy->update(delta_time, time_scale);
 
-        // 将来的にHPが0になったら削除する判定はここに入れるぜ
+        // 将来的にHPが0になったら削除する判定はここに入れる
         ++it;
     }
     // ----------------------------------------------------
@@ -99,16 +99,48 @@ void GameManager::update(float delta_time) {
         spawnBullet();
     }
 
-    // 4. 弾の更新と寿命管理
-    for (auto it = m_bullets.begin(); it != m_bullets.end();) {
-        (*it)->update(delta_time, time_scale);
-        if ((*it)->m_life_timer <= 0) {
-            it = m_bullets.erase(it);
+    //  --- 弾 と 敵 の当たり判定---
+    for (auto it_bullet = m_bullets.begin(); it_bullet != m_bullets.end();) {
+        bool bullet_hit = false; // 
+
+        for (auto it_enemy = m_enemies.begin(); it_enemy != m_enemies.end();) {
+
+            // 弾と敵の距離のベクトルの差を出す
+            tnl::Vector3 diff = (*it_bullet)->m_position - (*it_enemy)->m_position;
+            float distance = diff.length();
+
+            // 当たり判定の基準距離
+            float hit_range = 80.0f;
+
+            if (distance < hit_range) {
+                // 
+                (*it_enemy)->m_hp -= 5.0f;
+
+               
+                bullet_hit = true;
+
+                // もし敵のHPが0以下になったら、敵をリストから消す
+                if ((*it_enemy)->m_hp <= 0) {
+                    it_enemy = m_enemies.erase(it_enemy); // 敵の消滅
+                    continue; // 削除された場合は自動で次を指すので、インクリメントせず次のループへ
+                }
+            }
+
+            // ⭕ ここが正しい位置！当たってない、またはHPが残っている場合は次の敵へ進める
+            ++it_enemy;
+        }
+
+        // 何かに当たった弾はリストから削除する
+        if (bullet_hit) {
+            it_bullet = m_bullets.erase(it_bullet);
         }
         else {
-            ++it;
+            ++it_bullet;
         }
     }
+
+
+    
 }
 
 void GameManager::checkSwingBy() {
@@ -217,6 +249,10 @@ void GameManager::render() {
     DrawFormatString(10, 10, GetColor(255, 255, 255), "ENERGY: %.1f", player.energy);
     DrawFormatString(10, 30, GetColor(255, 255, 0), "BULLET COUNT: %d", (int)m_bullets.size());
    
+    //プレイヤーのHP表示
+    DrawFormatString(10, 70, GetColor(0, 255, 0), "PLAYER HP: %.1f / %.1f", player.m_hp, player.m_max_hp);
+
+    
     //------デバッグ表示用---------
     // 画面に現在のエネミー数を出してみようぜ
     DrawFormatString(10, 50, GetColor(255, 0, 0), "ENEMY COUNT: %d", (int)m_enemies.size());

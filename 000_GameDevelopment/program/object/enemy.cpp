@@ -8,6 +8,7 @@ void Enemy::init() {
 	m_hp = 10.0f;
 	m_max_hp = 10.0f;
 	m_speed = 2.0f;
+	m_attack_power = 5.0f;
 
 	m_velocity = { 0, 0, 0 };
 	m_rotation = { 0, 0, 0, 1 };
