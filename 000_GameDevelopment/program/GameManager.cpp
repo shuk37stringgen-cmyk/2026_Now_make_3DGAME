@@ -39,13 +39,13 @@ void GameManager::update(float delta_time) {
 
     // --- 【ここから：エネミーの自動生成（無双モード）】 ---
     m_enemy_spawn_timer += delta_time * time_scale;
-    if (m_enemy_spawn_timer >= 0.3f) { // 0.3秒ごとにドバドバ湧かせるぜ！
+    if (m_enemy_spawn_timer >= 0.3f) {
         m_enemy_spawn_timer = 0.0f;
 
         auto new_enemy = std::make_shared<Enemy>();
         new_enemy->init();
 
-        // プレイヤーの周囲のランダムな位置（少し画面外の遠く）にスポーン
+        // プレイヤーの周囲のランダムな位置
         float spawn_radius = 4000.0f;
         
         //角度をrandomにしてる
@@ -98,6 +98,16 @@ void GameManager::update(float delta_time) {
     if (tnl::Input::IsKeyDownTrigger(eKeys::KB_LEFT)) {
         spawnBullet();
     }
+    //弾の射出処理
+    for (auto it = m_bullets.begin(); it != m_bullets.end();) {
+        (*it)->update(delta_time, time_scale); // 弾を前に進める！
+        if ((*it)->m_life_timer <= 0) {
+            it = m_bullets.erase(it); // 寿命が尽きたら消す
+        }
+        else {
+            ++it;
+        }
+    }
 
     //  --- 弾 と 敵 の当たり判定---
     for (auto it_bullet = m_bullets.begin(); it_bullet != m_bullets.end();) {
@@ -110,7 +120,7 @@ void GameManager::update(float delta_time) {
             float distance = diff.length();
 
             // 当たり判定の基準距離
-            float hit_range = 80.0f;
+            float hit_range = 500.0f;
 
             if (distance < hit_range) {
                 // 
@@ -139,6 +149,32 @@ void GameManager::update(float delta_time) {
         }
     }
 
+
+
+    //エネミーがプレイヤーにあたった時のHPを減らす処理
+    for (auto it_enemy = m_enemies.begin(); it_enemy != m_enemies.end();) {
+
+        tnl::Vector3 diff = player.m_position - (*it_enemy)->m_position;
+
+        float distance = diff.length();
+        
+        float hit_range = 120.0f;
+
+        if (distance < hit_range) {
+            player.m_hp -= (*it_enemy)->m_attack_power;
+
+            it_enemy = m_enemies.erase(it_enemy);
+
+            if (player.m_hp <= 0.0f) {
+                player.m_hp = 0.0f;
+            }
+
+            continue;
+        }
+
+        it_enemy++;
+
+    }
 
     
 }
@@ -254,7 +290,7 @@ void GameManager::render() {
 
     
     //------デバッグ表示用---------
-    // 画面に現在のエネミー数を出してみようぜ
+    // 画面に現在のエネミー数をだす
     DrawFormatString(10, 50, GetColor(255, 0, 0), "ENEMY COUNT: %d", (int)m_enemies.size());
 }
 
