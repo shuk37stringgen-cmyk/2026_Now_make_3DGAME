@@ -241,25 +241,23 @@ void GameManager::updateCamera() {
     float cam_dist = -200.0f;
     float cam_height = 55.0f;
 
+
+    // 1. 自機の位置をここで理解させる
     tnl::Quaternion rot = player.m_rotation;
 
-    // 1. 自機の後ろの位置（目標地点）を計算
-    tnl::Vector3 target_pos = player.m_position + tnl::Vector3::TransformCoord({ 0, cam_height, cam_dist }, rot);
+    //  自機がひっくり帰ったらカメラも追うようにする
+    tnl::Vector3 my_up = tnl::Vector3::TransformCoord({ 0,1,0 }, rot);
 
-    // 2. 現在の位置から、目標地点へじわっと近づける
-    tnl::Vector3 current_pos = camera->getPosition();
-    float follow_speed = 0.12f; // これがカメラの「遊び」。0.1〜0.2くらいで調整
-
-    tnl::Vector3 next_pos;
-    next_pos.x = MyLerp(current_pos.x, target_pos.x, follow_speed);
-    next_pos.y = MyLerp(current_pos.y, target_pos.y, follow_speed);
-    next_pos.z = MyLerp(current_pos.z, target_pos.z, follow_speed);
+    tnl :: Vector3 cam_offset = tnl::Vector3::TransformCoord({ 0, 200,  -800 }, rot);
+    tnl::Vector3 next_pos = player.m_position + cam_offset;
 
     camera->setPosition(next_pos);
 
     // 3. カメラの向きも自機の少し先を見るようにして躍動感を出す
     tnl::Vector3 forward = tnl::Vector3::TransformCoord({ 0, 0, 1 }, rot);
     camera->setTarget(player.m_position + forward * 400.0f);
+
+    camera->setUpper(my_up);
 
     camera->update();
 }
