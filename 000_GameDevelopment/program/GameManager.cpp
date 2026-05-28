@@ -2,16 +2,7 @@
 
 void GameManager::init() {
 
-    //// 1. まずメインライトを平行光源をつかうらしい
-    //ChangeLightTypeDir(VGet(0.0f, -1.0f, 1.0f));
-
-    //// 2. メインライトの高原を最大にする
-    //SetLightDifColor(GetColorF(1.0f, 1.0f, 1.0f, 1.0f));
-
-    //// 3. 全体を明るくして影をけす
-    //SetGlobalAmbientLight(GetColorF(1.0f, 1.0f, 1.0f, 1.0f));
-
-
+   
     SetUseLighting(FALSE);
 
 
