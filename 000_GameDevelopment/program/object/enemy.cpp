@@ -2,7 +2,7 @@
 
 void Enemy::init() {
 	//EnemyƒƒbƒVƒ…‚Ì‚æ‚İ‚±‚İ
-	m_mesh = dxe::Mesh::CreateFromFileMV("resource/graphics/example/Enemy_Obj.mv1", 0.5f);
+	m_mesh = dxe::Mesh::CreateFromFileMV("resource/graphics/example/Enemy_Obj_pt2.mv1", 0.5f);
 
 	m_hairaito_color = GetColorF(1.0f, 1.0f, 0.0f, 1.0f);
 
