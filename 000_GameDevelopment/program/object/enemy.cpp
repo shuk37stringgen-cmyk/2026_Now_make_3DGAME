@@ -4,6 +4,8 @@ void Enemy::init() {
 	//Enemyメッシュのよみこみ
 	m_mesh = dxe::Mesh::CreateFromFileMV("resource/graphics/example/Enemy_Obj.mv1", 0.5f);
 
+	m_hairaito_color = GetColorF(1.0f, 1.0f, 0.0f, 1.0f);
+
 	//エネミーの基本情報
 	m_hp = 10.0f;
 	m_max_hp = 10.0f;
@@ -12,10 +14,12 @@ void Enemy::init() {
 
 	m_velocity = { 0, 0, 0 };
 	m_rotation = { 0, 0, 0, 1 };
+
+	
 }
 
 void Enemy::update(float delta_time, float time_scale) {
-	m_position += m_velocity * time_scale;    //一の更新をする
+	m_position += m_velocity * time_scale;    //位置の更新をする
 
 	if (m_mesh) {
 		m_mesh->setPosition(m_position);
@@ -41,6 +45,7 @@ void Enemy::applySwingBy(tnl::Vector3 planet_pos) {
 
 void Enemy::render(Shared<dxe::Camera> cam) {
 	if (m_mesh) {
+		MV1SetMaterialEmiColor(m_mesh->getDxMvHdl(), 0, m_hairaito_color);
 		m_mesh->render(cam);
 	}
 }

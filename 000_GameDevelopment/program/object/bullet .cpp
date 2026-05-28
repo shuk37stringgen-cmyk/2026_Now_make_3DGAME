@@ -8,6 +8,9 @@ void Bullet::init() {
 
 	m_mesh = dxe::Mesh::CreateFromFileMV("resource/graphics/example/laser2.mv1", 1.0f);
 
+	//キャラのハイライトを変えるカラー
+	m_hairaito_color = GetColorF(1.0f,  1.0f,  0.0f,  1.0f);
+
 	//2.　弾の基本用パラメータの設定
 	m_max_speed = 300.0f;
 	m_life_timer = 2.0f;    // 2秒で消える
@@ -31,6 +34,7 @@ void Bullet::render(Shared<dxe::Camera> cam) {
 	m_mesh->render(cam);
 
 	if (m_mesh) {
+		
 		m_mesh->render(cam); 
 	}
 }

@@ -13,6 +13,9 @@ public:
 	tnl::Vector3 m_velocity;          //速度
 	tnl::Quaternion m_rotation;  //回転
 
+	//オブジェクトそれぞれをわかりやすくするためのライト
+	COLOR_F m_hairaito_color = { 0.0f, 0.0f, 0.0f, 1.0f };
+
 	//共通のメーターケース
 	float m_hp;        //ヒットポイント
 	float m_max_hp;    //最大ヒットポイント

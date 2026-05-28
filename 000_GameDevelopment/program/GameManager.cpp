@@ -37,18 +37,17 @@ void GameManager::update(float delta_time) {
     updateCamera();
 
 
-    // --- 【ここから：エネミーの自動生成（無双モード）】 ---
+    // --- ここから：エネミーの自動生成（無双モード） ---
     m_enemy_spawn_timer += delta_time * time_scale;
     if (m_enemy_spawn_timer >= 0.3f) {
         m_enemy_spawn_timer = 0.0f;
 
         if (m_enemies.size() < 100) {
+
+            //エネミー生成と初期化
             auto new_enemy = std::make_shared<Enemy>();
             new_enemy->init();
             
-
-
-
 
             // プレイヤーの周囲のランダムな位置
             float spawn_radius = 4000.0f;
@@ -136,8 +135,8 @@ void GameManager::update(float delta_time) {
 
                 // もし敵のHPが0以下になったら、敵をリストから消す
                 if ((*it_enemy)->m_hp <= 0) {
-                    it_enemy = m_enemies.erase(it_enemy); // 敵の消滅
-                    continue; // 削除された場合は自動で次を指すので、インクリメントせず次のループへ
+                    it_enemy = m_enemies.erase(it_enemy); // 敵の消滅きえる
+                    continue; // 削除された場合は自動で次を指すからインクリメントせず次のループへ
                 }
             }
 
