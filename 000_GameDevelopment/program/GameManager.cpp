@@ -237,28 +237,54 @@ void GameManager::checkSwingBy() {
 }
 
 void GameManager::updateCamera() {
-    // スイングバイ中も通常時も同じ距離（-200.0f）のまま固定して、ガタつきを無くす
-    float cam_dist = -200.0f;
-    float cam_height = 55.0f;
+    // 1. プレイヤーの現在の回転と位置を取得
+    tnl::Quaternion player_rot = player.m_rotation;
+    tnl::Vector3 player_pos = player.m_position;
 
+    // 現在のスピード（velocityの長さ）を取得
+    float current_speed = player.m_velocity.length();
 
-    // 1. 自機の位置をここで理解させる
-    tnl::Quaternion rot = player.m_rotation;
+   
+    float target_z_offset = -450.0f - (current_speed * 4.0f);
+    float target_y_offset = 120.0f + (current_speed * 0.3f);
 
-    //  自機がひっくり帰ったらカメラも追うようにする
-    tnl::Vector3 my_up = tnl::Vector3::TransformCoord({ 0,1,0 }, rot);
+    // 2. プレイヤー基準の「理想の上方向」と「理想のカメラ位置」を計算
+    tnl::Vector3 target_up = tnl::Vector3::TransformCoord({ 0, 1, 0 }, player_rot);
+    tnl::Vector3 cam_offset = tnl::Vector3::TransformCoord({ 0, target_y_offset, target_z_offset }, player_rot);
+    tnl::Vector3 target_pos = player_pos + cam_offset;
 
-    tnl :: Vector3 cam_offset = tnl::Vector3::TransformCoord({ 0, 200,  -800 }, rot);
-    tnl::Vector3 next_pos = player.m_position + cam_offset;
+    
+    static bool is_first = true;
+    static tnl::Vector3 current_cam_pos;
+    static tnl::Vector3 current_cam_up;
+    static tnl::Vector3 current_look_at;
 
-    camera->setPosition(next_pos);
+    if (is_first) {
+        current_cam_pos = target_pos;
+        current_cam_up = target_up;
+        current_look_at = player_pos + tnl::Vector3::TransformCoord({ 0, 0, 1 }, player_rot) * 200.0f;
+        is_first = false;
+    }
 
-    // 3. カメラの向きも自機の少し先を見るようにして躍動感を出す
-    tnl::Vector3 forward = tnl::Vector3::TransformCoord({ 0, 0, 1 }, rot);
-    camera->setTarget(player.m_position + forward * 400.0f);
+    // 3. MyLerpを使って、カメラの位置と上方向を「じわっと」追従させる
+    current_cam_pos = MyLerp(current_cam_pos, target_pos, 0.1f);
 
-    camera->setUpper(my_up);
+    
+    current_cam_up = MyLerp(current_cam_up, target_up, 0.2f);
 
+    camera->setPosition(current_cam_pos);
+    camera->setUpper(tnl::Vector3::Normalize(current_cam_up));
+
+    // 4. カメラの注視点（ターゲット）の調整
+    float look_ahead_dist = 200.0f + (current_speed * 2.0f);
+    tnl::Vector3 forward = tnl::Vector3::TransformCoord({ 0, 0, 1 }, player_rot);
+    tnl::Vector3 target_look_at = player_pos + forward * look_ahead_dist;
+
+    current_look_at = MyLerp(current_look_at, target_look_at, 0.2f);
+
+    camera->setTarget(current_look_at);
+
+    // 5. カメラ情報を確定
     camera->update();
 }
 
