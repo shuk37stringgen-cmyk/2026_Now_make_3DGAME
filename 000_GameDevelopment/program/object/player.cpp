@@ -71,7 +71,11 @@ void Player::update(float delta_time, float time_scale) {
 
         // 2. 旋回
         float turn_speed = 0.03f * time_scale;
+        float pitch_speed = 0.02f;
         float roll_limit = 0.6f;
+
+        tnl::Quaternion deltaRotation = { 0.0f, 0.0f, 0.0f, 1.0f };
+
         if (tnl::Input::IsKeyDown(eKeys::KB_A)) {
             m_senkai -= turn_speed;
             m_katamuki = MyLerp(m_katamuki, -roll_limit, 0.1f);
@@ -87,13 +91,19 @@ void Player::update(float delta_time, float time_scale) {
         // 4. 上下
         if (tnl::Input::IsKeyDown(eKeys::KB_W)) m_unazuki += 0.02f * time_scale;
         else if (tnl::Input::IsKeyDown(eKeys::KB_S)) m_unazuki -= 0.02f * time_scale;
+        
+
+        //回転の適応進化版
+        m_rotation = m_rotation * deltaRotation;
+        tnl::Quaternion qRoll = tnl::Quaternion::RotationAxis({ 0,0,1 }, -m_katamuki);
+        m_mesh->setRotation(m_rotation * qRoll);
 
         // 5. 回転の適用
-        tnl::Quaternion qYaw = tnl::Quaternion::RotationAxis({ 0, 1, 0 }, m_senkai);
+        /*tnl::Quaternion qYaw = tnl::Quaternion::RotationAxis({ 0, 1, 0 }, m_senkai);
         tnl::Quaternion qPitch = tnl::Quaternion::RotationAxis({ 1, 0, 0 }, -m_unazuki);
         tnl::Quaternion qRoll = tnl::Quaternion::RotationAxis({ 0, 0, 1 }, -m_katamuki);
         m_rotation = qYaw * qPitch * qRoll;
-        m_mesh->setRotation(m_rotation);
+        m_mesh->setRotation(m_rotation);*/
 
         // 6. 進行方向の調整
         if (m_velocity.length() > 0.1f) {
