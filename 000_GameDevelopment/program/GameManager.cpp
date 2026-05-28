@@ -21,8 +21,8 @@ void GameManager::init() {
     // 最初から大きめの星を配置
     m_planets.push_back(std::make_shared<Planet>(tnl::Vector3(0, 0, 0), 3000.0f));
 
-    //skybox = dxe::Mesh::CreateCubeMV(80000, 10, 10);
-   // skybox->setTexture(dxe::Texture::CreateFromFile("resource/graphics/example/skybox/skybox_a.png"));
+    skybox = dxe::Mesh::CreateCubeMV(80000, 10, 10);
+    skybox->setTexture(dxe::Texture::CreateFromFile("resource/graphics/example/skybox/skybox_a.png"));
 }
 
 void GameManager::update(float delta_time) {
@@ -279,6 +279,10 @@ void GameManager::spawnBullet() {
 
 void GameManager::render() {
     for (auto& p : m_planets) p->render(camera);
+
+    //スカイボックスを表示
+    skybox->render(camera);
+
     player.render(camera);
 
     // エネミーの描写
