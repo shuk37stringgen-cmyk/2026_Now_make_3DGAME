@@ -63,13 +63,13 @@ void Player::update(float delta_time, float time_scale) {
     else {
         // ----【通常フライト移動の処理】-----
 
-        // 1. 前進
+        //  前進
         tnl::Vector3 forward = tnl::Vector3::TransformCoord({ 0, 0, 1 }, m_rotation);
         if (tnl::Input::IsKeyDown(eKeys::KB_SPACE)) {
             m_velocity += forward * m_accel_power * time_scale;
         }
 
-        // 2. 旋回
+        // 旋回
         float turn_speed = 0.03f * time_scale;
         float pitch_speed = 0.02f;
         float roll_limit = 0.6f;
@@ -77,20 +77,26 @@ void Player::update(float delta_time, float time_scale) {
         tnl::Quaternion deltaRotation = { 0.0f, 0.0f, 0.0f, 1.0f };
 
         if (tnl::Input::IsKeyDown(eKeys::KB_A)) {
-            m_senkai -= turn_speed;
+            deltaRotation = deltaRotation * tnl::Quaternion::RotationAxis({ 0, 1, 0 }, -turn_speed);
             m_katamuki = MyLerp(m_katamuki, -roll_limit, 0.1f);
         }
         else if (tnl::Input::IsKeyDown(eKeys::KB_D)) {
-            m_senkai += turn_speed;
+            deltaRotation = deltaRotation * tnl::Quaternion::RotationAxis({ 0, 1, 0 }, +turn_speed);
             m_katamuki = MyLerp(m_katamuki, roll_limit, 0.1f);
         }
         else {
             m_katamuki = MyLerp(m_katamuki, 0.0f, 0.1f);
         }
 
-        // 4. 上下
-        if (tnl::Input::IsKeyDown(eKeys::KB_W)) m_unazuki += 0.02f * time_scale;
-        else if (tnl::Input::IsKeyDown(eKeys::KB_S)) m_unazuki -= 0.02f * time_scale;
+        // 上下
+        if (tnl::Input::IsKeyDown(eKeys::KB_S)) {
+            
+            deltaRotation = deltaRotation * tnl::Quaternion::RotationAxis({ 1, 0, 0 }, pitch_speed * time_scale);
+        }
+        else if (tnl::Input::IsKeyDown(eKeys::KB_W)) {
+            
+            deltaRotation = deltaRotation * tnl::Quaternion::RotationAxis({ 1, 0, 0 }, -pitch_speed * time_scale);
+        }
         
 
         //回転の適応進化版
@@ -98,14 +104,9 @@ void Player::update(float delta_time, float time_scale) {
         tnl::Quaternion qRoll = tnl::Quaternion::RotationAxis({ 0,0,1 }, -m_katamuki);
         m_mesh->setRotation(m_rotation * qRoll);
 
-        // 5. 回転の適用
-        /*tnl::Quaternion qYaw = tnl::Quaternion::RotationAxis({ 0, 1, 0 }, m_senkai);
-        tnl::Quaternion qPitch = tnl::Quaternion::RotationAxis({ 1, 0, 0 }, -m_unazuki);
-        tnl::Quaternion qRoll = tnl::Quaternion::RotationAxis({ 0, 0, 1 }, -m_katamuki);
-        m_rotation = qYaw * qPitch * qRoll;
-        m_mesh->setRotation(m_rotation);*/
 
-        // 6. 進行方向の調整
+
+        //  進行方向の調整
         if (m_velocity.length() > 0.1f) {
             float current_speed = m_velocity.length();
             m_velocity = MyLerp(m_velocity, forward * current_speed, 0.05f * time_scale);
