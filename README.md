@@ -57,3 +57,17 @@ https://www.youtube.com/watch?v=-HPaA16ezWo
 * オブジェクト指向
 * クォータニオン
 * AI支援開発
+
+
+##今後実装させたい動き
+
+Player　スイングバイによって自機に対してバフをかける。
+　　　　上下反転できるようにして上下変える。
+
+Enemy　
+
+
+Planet　バフを｛HP、Atc、Gef、｝
+
+
+
