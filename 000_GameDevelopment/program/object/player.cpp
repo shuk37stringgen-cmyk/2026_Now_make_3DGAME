@@ -69,6 +69,25 @@ void Player::update(float delta_time, float time_scale) {
             m_velocity += forward * m_accel_power * time_scale;
         }
 
+        //Playerそのものの動きを上下反転させる
+       //上下反転ロジック
+        if (tnl::Input::IsKeyDownTrigger(eKeys::KB_DOWN)) {
+            //現在の自機の中心軸をそのまま反転させて使う
+            tnl::Vector3 current_f = tnl::Vector3::TransformCoord({ 0, 0, 1 }, m_rotation);
+            tnl::Quaternion flip_q = tnl::Quaternion::RotationAxis(current_f, tnl::ToRadian(180.0f));
+
+            //姿勢の反転
+            m_rotation = flip_q * m_rotation;
+
+            //傾き、うなずきの動きも切り替え
+            m_unazuki = -m_unazuki;
+            m_katamuki = -m_katamuki;
+
+       }
+       
+
+
+
         // 旋回
         float turn_speed = 0.03f * time_scale;
         float pitch_speed = 0.02f;
