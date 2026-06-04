@@ -3,22 +3,31 @@
 void Player::init() {
     m_mesh = dxe::Mesh::CreateFromFileMV("resource/graphics/example/PlayerBard.mv1", 0.5f);
 
+    //スポーン位置
     m_position = { 0, 500, -4500 };
     m_velocity = { 0, 0, 0 };
     m_rotation = { 0, 0, 0, 1 };
 
-    energy = 0;
+    //角度
     m_senkai = 0;
     m_unazuki = 0;
     m_katamuki = 0;
 
+    //反転した時の数値
+    m_hanten_timer = 0.0f;
+    m_is_hanten = false;
+
+    //持つべき要素の数値
+    energy = 0;
     m_hp = 100.0f;
     m_max_hp = 100.0f;
 
+    //機体の速さやらなんやら
     m_max_speed = 30.0f;
     m_accel_power = 0.8f;
     m_friction = 0.98f;
 
+    //スイングバイ中に必要な距離やら
     m_swingby_angle = 0;
     m_hosi_kyori = 0;
     m_target_planet = nullptr;
@@ -104,7 +113,7 @@ void Player::update(float delta_time, float time_scale) {
         
         // 上下 (上と下の向ける角度の制限をする)
         if (tnl::Input::IsKeyDown(eKeys::KB_S)) {
-            if (m_unazuki > tnl::ToRadian(-85.0f)) {
+            if (m_unazuki > tnl::ToRadian(-90.0f)) {
                 m_unazuki -= pitch_speed;
                 deltaRotation = deltaRotation * tnl::Quaternion::RotationAxis({ 1, 0, 0 }, pitch_speed);
             }
@@ -113,7 +122,7 @@ void Player::update(float delta_time, float time_scale) {
         }
         else if (tnl::Input::IsKeyDown(eKeys::KB_W)) {
             
-            if (m_unazuki < tnl::ToRadian(85.0f)) {
+            if (m_unazuki < tnl::ToRadian(90.0f)) {
                 m_unazuki += pitch_speed;
                 deltaRotation = deltaRotation * tnl::Quaternion::RotationAxis({ 1, 0, 0 }, -pitch_speed);
             }

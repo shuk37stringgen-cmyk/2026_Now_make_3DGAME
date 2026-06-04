@@ -27,9 +27,12 @@
 */
 
 class Player: public CharacterBase {
-public:
+private:
+    float m_hanten_timer;
+    bool m_is_hanten;
 
-	
+
+public:
 
 	// ó‘ÔŠÇ—
     PlayerState state = PlayerState::FLIGHT;
@@ -45,10 +48,6 @@ public:
 	float m_hosi_kyori; // ¯‚Æ‚Ì‹——£
     std::shared_ptr<Planet> m_target_planet;
 	float m_swingby_cooltime; 
-
-
-
-    
 
 	//-----•K—vŠÖ”-----
     void init() override;
