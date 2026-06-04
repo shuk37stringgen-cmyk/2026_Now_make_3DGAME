@@ -5,6 +5,13 @@ void GameManager::init() {
    
     SetUseLighting(FALSE);
 
+    //ここで初期化
+    layer1 = std::make_shared<dxe::GraphicsLayer>(tnl::Vector2i(DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT));
+    layer2 = std::make_shared<dxe::GraphicsLayer>(tnl::Vector2i(DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT));
+
+    layer2->setBlendMode(DX_BLENDMODE_ADD); // 黒背景を透明にして色だけ足し算するモード
+    layer2->setAdoption(dxe::GraphicsLayer::fAdoption::BLOOM | dxe::GraphicsLayer::fAdoption::BLUR); // ホワッと光らせる効果
+
 
     camera = std::make_shared<dxe::Camera>(DXE_WINDOW_WIDTH_F, DXE_WINDOW_HEIGHT_F);
     player.init();
@@ -293,27 +300,46 @@ void GameManager::spawnBullet() {
 }
 
 void GameManager::render() {
-    for (auto& p : m_planets) p->render(camera);
+    //for (auto& p : m_planets) p->render(camera);
 
-    //スカイボックスを表示
-    skybox->render(camera);
+    ////スカイボックスを表示
+    //skybox->render(camera);
 
-    player.render(camera);
+    //player.render(camera);
 
-    // エネミーの描写
-    for (auto& e : m_enemies) e->render(camera);
+    //// エネミーの描写
+    //for (auto& e : m_enemies) e->render(camera);
 
-    //弾の描写
-    for (auto& b : m_bullets) b->render(camera);
+    ////弾の描写
+    //for (auto& b : m_bullets) b->render(camera);
 
+
+    layer1->write([&]() {
+        if (skybox)skybox->render(camera);
+
+        for (auto& p : m_planets) p->render(camera);
+
+        player.render(camera);
+
+        for (auto& e : m_enemies) e->render(camera);
+
+        });
+
+    layer2->write([&]() {
+
+        for (auto& b : m_bullets) b->render(camera);
+        });
+  
+    layer1->draw();
+    layer2->draw();
+
+
+    //-----UI　デバックの表示用
     // UI表示
     DrawFormatString(10, 10, GetColor(255, 255, 255), "ENERGY: %.1f", player.energy);
     DrawFormatString(10, 30, GetColor(255, 255, 0), "BULLET COUNT: %d", (int)m_bullets.size());
-   
     //プレイヤーのHP表示
     DrawFormatString(10, 70, GetColor(0, 255, 0), "PLAYER HP: %.1f / %.1f", player.m_hp, player.m_max_hp);
-
-    
     //------デバッグ表示用---------
     // 画面に現在のエネミー数をだす
     DrawFormatString(10, 50, GetColor(255, 0, 0), "ENEMY COUNT: %d", (int)m_enemies.size());

@@ -14,6 +14,10 @@ private:
     std::vector<Shared<Planet>> m_planets;
     Shared<dxe::Camera> camera;
     Shared<dxe::Mesh> skybox;
+
+    std::shared_ptr<dxe::GraphicsLayer>layer1;
+    std::shared_ptr<dxe::GraphicsLayer>layer2;
+
     float time_scale = 1.0f;
 	float m_enemy_spawn_timer = 0.0f;
 
