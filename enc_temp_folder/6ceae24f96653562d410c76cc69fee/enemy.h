@@ -12,6 +12,7 @@ public:
 	float m_speed;
 	float m_attack_power;
 
+
 	//基底クラスのオーバーライド
 	void init() override;
 	void update(float delta_time, float time_scale) override;

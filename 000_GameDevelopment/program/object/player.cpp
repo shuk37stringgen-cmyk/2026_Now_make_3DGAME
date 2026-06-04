@@ -99,7 +99,7 @@ void Player::update(float delta_time, float time_scale) {
         }
         
 
-        //回転の適応進化版
+        //回転の適応
         m_rotation = m_rotation * deltaRotation;
         tnl::Quaternion qRoll = tnl::Quaternion::RotationAxis({ 0,0,1 }, -m_katamuki);
         m_mesh->setRotation(m_rotation * qRoll);

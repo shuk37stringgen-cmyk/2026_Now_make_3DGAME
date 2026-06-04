@@ -29,8 +29,6 @@ void Enemy::update(float delta_time, float time_scale) {
 			m_rotation = tnl::Quaternion::RotationAxis({ 0, 1, 0 }, -angle + (3.1415f / 2.0f));
 			m_mesh->setRotation(m_rotation);
 		}
-
-
 	}
 }
 
