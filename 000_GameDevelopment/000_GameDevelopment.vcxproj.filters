@@ -51,6 +51,9 @@
     <Filter Include="Source\[004] game\object">
       <UniqueIdentifier>{498ddeec-fd72-4028-a106-07f53f3b694a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\[004] game\effect">
+      <UniqueIdentifier>{58427e36-c251-41ef-bca8-7d1e35e65fd9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\tnl\json11.hpp">
@@ -472,6 +475,9 @@
     </ClInclude>
     <ClInclude Include="program\object\enemy.h">
       <Filter>Source\[004] game\object</Filter>
+    </ClInclude>
+    <ClInclude Include="program\effect\EffectBase.h">
+      <Filter>Source\[004] game\effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
