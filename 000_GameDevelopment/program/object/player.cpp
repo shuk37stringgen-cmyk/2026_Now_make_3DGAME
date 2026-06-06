@@ -72,12 +72,16 @@ void Player::update(float delta_time, float time_scale) {
     else {
         // ----【通常フライト移動の処理】-----
 
-        
 
-        //Playerそのものの動きを上下反転させる
+        // 旋回
+        float turn_speed = 0.03f * time_scale;
+        float pitch_speed = 0.02f * time_scale;
+
+
+        //急降下＋後ろに振り向き------------------------------------------------------------------------------------------
        //上下反転ロジック
-        if (tnl::Input::IsKeyDownTrigger(eKeys::KB_DOWN)) {
-            //現在の自機の中心軸をそのまま反転させて使う
+        if (tnl::Input::IsKeyDownTrigger(eKeys::KB_UP)) {
+            //現在の自機のY軸を中心に後ろに振り向く＋数秒間ブーストで速くなる
             tnl::Vector3 current_f = tnl::Vector3::TransformCoord({ 0, 0, 1 }, m_rotation);
             tnl::Quaternion flip_q = tnl::Quaternion::RotationAxis(current_f, tnl::ToRadian(180.0f));
 
@@ -87,6 +91,17 @@ void Player::update(float delta_time, float time_scale) {
             //傾き、うなずきの動きも切り替え
             m_unazuki = -m_unazuki;
        }
+       //-----------------------------------------------------------------------------------------------------
+
+        //回避ロール＋上下反転--------------------------------------------------------------------------------------------
+        if (tnl::Input::IsKeyDownTrigger(eKeys::KB_DOWN)) {
+            //現在の自機のX軸を中心に180ど回転させる＋同時にA、Dに合わせてどちらかにすこし移動
+
+
+
+
+        }
+
 
 
         //前進
@@ -94,11 +109,6 @@ void Player::update(float delta_time, float time_scale) {
         if (tnl::Input::IsKeyDown(eKeys::KB_SPACE)) {
             m_velocity += forward * m_accel_power * time_scale;
         }
-
-        // 旋回
-        float turn_speed = 0.03f * time_scale;
-        float pitch_speed = 0.02f * time_scale;
-      
 
         tnl::Quaternion deltaRotation = { 0.0f, 0.0f, 0.0f, 1.0f };
 
