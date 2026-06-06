@@ -291,7 +291,11 @@ void GameManager::spawnBullet() {
     auto new_bullet = std::make_shared<Bullet>();
     new_bullet->init();
 
+    //自機の位置から
     new_bullet->m_position = player.m_position;
+    //自機の角度に合わせて
+    new_bullet->m_rotation = player.m_rotation;
+
 
     tnl::Vector3 forward = tnl::Vector3::TransformCoord({ 0, 0, 1 }, player.m_rotation);
     new_bullet->m_velocity = forward * new_bullet->m_max_speed;
